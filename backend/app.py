@@ -8,9 +8,44 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/')
+def home():
+    return "Option Pricer API is running!"
+
+# Add stock data route
+@app.route('/stock-data/<ticker>')
+def stock_data(ticker):
+    try:
+        stock = yf.Ticker(ticker)
+        hist = stock.history(period="1d")
+        if hist.empty:
+            return jsonify({
+                'success': False
+            })
+        
+        # Get current price and historical volatility
+        price = float(hist['Close'].iloc[-1])
+        
+        # Calculate 30-day volatility
+        hist_30d = stock.history(period="30d")
+        volatility = float(hist_30d['Close'].pct_change().std() * np.sqrt(252) * 100)
+        
+        return jsonify({
+            'success': True,
+            'price': price,
+            'volatility': volatility
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        })
+
+# Change route from /option-pricer to /option-pricing to match frontend
 @app.route('/option-pricing', methods=['POST'])
 def option_pricing():
     data = request.get_json()
+    # Rest of your option pricing code remains the same...
     # Get ticker from the request.
     ticker = data.get('ticker', None)
     
@@ -61,9 +96,7 @@ def option_pricing():
     sigma = math.sqrt(((sum_CT2 - (sum_CT**2)/M) * math.exp(-2*r*T)) / (M - 1))
     standardError = sigma / math.sqrt(M)
 
-    # Create two plots:
-    # 1. Plot the first 100 simulated terminal stock prices.
-    # 2. Convergence visualization (bell curve with standard error shading).
+    # Create two plots
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
     # Plot 1: Terminal stock prices for the first 100 simulations.
@@ -85,7 +118,6 @@ def option_pricing():
     axes[1].fill_between(x2, s2, color='cornflowerblue', label='1 StDev')
     axes[1].fill_between(x3, s3, color='tab:blue')
     axes[1].plot([C0, C0], [0, max(s2)*1.1], 'k', label='Theoretical Value')
-    # For demonstration, we use the computed optionPrice as the market value.
     market_value = optionPrice  
     axes[1].plot([market_value, market_value], [0, max(s2)*1.1], 'r', label='Market Value')
     axes[1].set_xlabel('Option Price')
