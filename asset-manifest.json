@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/option-pricer/static/css/main.1adf86c4.css",
-    "main.js": "/option-pricer/static/js/main.d84ab845.js",
+    "main.js": "/option-pricer/static/js/main.4a36f5ea.js",
     "static/js/488.e75445ad.chunk.js": "/option-pricer/static/js/488.e75445ad.chunk.js",
     "index.html": "/option-pricer/index.html",
     "main.1adf86c4.css.map": "/option-pricer/static/css/main.1adf86c4.css.map",
-    "main.d84ab845.js.map": "/option-pricer/static/js/main.d84ab845.js.map",
+    "main.4a36f5ea.js.map": "/option-pricer/static/js/main.4a36f5ea.js.map",
     "488.e75445ad.chunk.js.map": "/option-pricer/static/js/488.e75445ad.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1adf86c4.css",
-    "static/js/main.d84ab845.js"
+    "static/js/main.4a36f5ea.js"
   ]
 }
