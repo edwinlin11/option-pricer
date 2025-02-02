@@ -19,6 +19,7 @@ const OptionPricer = () => {
   const [results, setResults] = useState(null);
   const [plotImg, setPlotImg] = useState('');
   const [error, setError] = useState(null);
+  const [marketValue, setMarketValue] = useState(0);
 
   // (Optional) Function to fetch ticker data manually if desired.
   const fetchStockData = async (ticker) => {
@@ -51,7 +52,7 @@ const OptionPricer = () => {
     volatility: Number(inputs.volatility),
     riskFreeRate: Number(inputs.riskFreeRate),
     iterations: Number(inputs.iterations),
-    marketValue: actualMarketValue
+    marketValue: marketValue
     };
 
     try {
