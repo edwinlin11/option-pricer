@@ -51,7 +51,6 @@ const OptionPricer = () => {
     volatility: Number(inputs.volatility),
     riskFreeRate: Number(inputs.riskFreeRate),
     iterations: Number(inputs.iterations),
-    marketValue: marketValue
     };
 
     try {
