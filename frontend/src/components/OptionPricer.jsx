@@ -44,13 +44,14 @@ const OptionPricer = () => {
   // Calls the Python backend which performs the simulation and returns results/plots.
   const calculateOptionPrice = async () => {
     const payload = {
-      ticker: inputs.ticker,
+    ticker: inputs.ticker,
     stockPrice: Number(inputs.stockPrice),
     strikePrice: Number(inputs.strikePrice),
     timeToExpiry: Number(inputs.timeToExpiry),
     volatility: Number(inputs.volatility),
     riskFreeRate: Number(inputs.riskFreeRate),
-    iterations: Number(inputs.iterations)
+    iterations: Number(inputs.iterations),
+    marketValue: actualMarketValue
     };
 
     try {

@@ -118,7 +118,7 @@ def option_pricing():
     axes[1].fill_between(x2, s2, color='cornflowerblue', label='1 StDev')
     axes[1].fill_between(x3, s3, color='tab:blue')
     axes[1].plot([C0, C0], [0, max(s2)*1.1], 'k', label='Theoretical Value')
-    market_value = optionPrice  
+    market_value = data.get('marketValue', optionPrice)  
     axes[1].plot([market_value, market_value], [0, max(s2)*1.1], 'r', label='Market Value')
     axes[1].set_xlabel('Option Price')
     axes[1].set_ylabel('Probability')
