@@ -45,12 +45,12 @@ const OptionPricer = () => {
   const calculateOptionPrice = async () => {
     const payload = {
       ticker: inputs.ticker,
-      stockPrice: inputs.stockPrice,
-      strikePrice: inputs.strikePrice,
-      timeToExpiry: inputs.timeToExpiry,
-      volatility: inputs.volatility,
-      riskFreeRate: inputs.riskFreeRate,
-      iterations: inputs.iterations
+    stockPrice: Number(inputs.stockPrice),
+    strikePrice: Number(inputs.strikePrice),
+    timeToExpiry: Number(inputs.timeToExpiry),
+    volatility: Number(inputs.volatility),
+    riskFreeRate: Number(inputs.riskFreeRate),
+    iterations: Number(inputs.iterations)
     };
 
     try {
