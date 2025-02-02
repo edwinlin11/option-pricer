@@ -24,7 +24,7 @@ const OptionPricer = () => {
   const fetchStockData = async (ticker) => {
     try {
       setError(null);
-      const response = await fetch(`https://yourusername.pythonanywhere.com/stock-data/${ticker}`);
+      const response = await fetch(`https://edwinlin.pythonanywhere.com/stock-data/${ticker}`);
       const data = await response.json();
       if (data.success) {
         setInputs(prev => ({
