@@ -55,7 +55,7 @@ const OptionPricer = () => {
 
     try {
       setError(null);
-      const response = await fetch('https://edwinlin.pythonanywhere.com/', {
+      const response = await fetch('https://edwinlin.pythonanywhere.com/option-pricer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
