@@ -3,6 +3,8 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
 import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
 import { Alert } from '../components/ui/alert';
+import { Search } from 'lucide-react';
+
 
 const OptionPricer = () => {
   const [inputs, setInputs] = useState({
