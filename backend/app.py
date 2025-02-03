@@ -71,7 +71,6 @@ def option_pricing():
     r = float(data.get('riskFreeRate', 2.5)) / 100.0    # convert percent to decimal
     M = int(data.get('iterations', 1000))
 
-    # One-step simulation using np.random.normal() for standard normal values.
     dt = T
     nudt = (r - 0.5 * vol**2) * dt
     volsdt = vol * math.sqrt(dt)
@@ -79,51 +78,28 @@ def option_pricing():
 
     sum_CT = 0.0
     sum_CT2 = 0.0
-    sim_paths = []  # store first 100 terminal stock prices
+    sim_paths = []  # store all terminal stock prices
+
     for i in range(M):
-        # Use standard normal distribution.
         Z = np.random.normal()  # standard normal random variable
         lnST = lnS + nudt + volsdt * Z
         ST = math.exp(lnST)
         CT = max(0, ST - K)  # European call payoff
         sum_CT += CT
         sum_CT2 += CT * CT
-        if i < 100:
-            sim_paths.append(ST)
+        sim_paths.append(ST)  # store every simulated terminal stock price
 
     # Calculate option price and standard error.
     optionPrice = math.exp(-r * T) * (sum_CT / M)
     sigma = math.sqrt(((sum_CT2 - (sum_CT**2)/M) * math.exp(-2*r*T)) / (M - 1))
     standardError = sigma / math.sqrt(M)
 
-    # Create two plots
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-    # Plot 1: Terminal stock prices for the first 100 simulations.
-    axes[0].plot(range(len(sim_paths)), sim_paths, marker='o', linestyle='-')
-    axes[0].set_title('Simulated Terminal Stock Prices (First 100 Paths)')
-    axes[0].set_xlabel('Simulation Number')
-    axes[0].set_ylabel('Stock Price')
-
-    # Plot 2: Convergence Visualization.
-    C0 = optionPrice
-    SE = standardError
-    x1 = np.linspace(C0 - 3*SE, C0 - SE, 100)
-    x2 = np.linspace(C0 - SE, C0 + SE, 100)
-    x3 = np.linspace(C0 + SE, C0 + 3*SE, 100)
-    s1 = stats.norm.pdf(x1, C0, SE)
-    s2 = stats.norm.pdf(x2, C0, SE)
-    s3 = stats.norm.pdf(x3, C0, SE)
-    axes[1].fill_between(x1, s1, color='tab:blue', label='> StDev')
-    axes[1].fill_between(x2, s2, color='cornflowerblue', label='1 StDev')
-    axes[1].fill_between(x3, s3, color='tab:blue')
-    axes[1].plot([C0, C0], [0, max(s2)*1.1], 'k', label='Theoretical Value')
-    market_value = data.get('marketValue', optionPrice)  
-    axes[1].plot([market_value, market_value], [0, max(s2)*1.1], 'r', label='Market Value')
-    axes[1].set_xlabel('Option Price')
-    axes[1].set_ylabel('Probability')
-    axes[1].set_title('Convergence Visualization')
-    axes[1].legend()
+    # Create a histogram of simulated terminal stock prices.
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.hist(sim_paths, bins=30, edgecolor='black', alpha=0.7)
+    ax.set_title("Histogram of Simulated Terminal Stock Prices")
+    ax.set_xlabel("Terminal Stock Price")
+    ax.set_ylabel("Frequency")
 
     plt.tight_layout()
     buf = io.BytesIO()
