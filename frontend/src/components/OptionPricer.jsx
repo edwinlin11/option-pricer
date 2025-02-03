@@ -33,10 +33,10 @@ const OptionPricer = () => {
           volatility: data.volatility
         }));
       } else {
-        setError('Failed to fetch stock data');
+        setError('Failed to fetch stock data. Try again.');
       }
     } catch (err) {
-      setError('Error fetching stock data');
+      setError('Error fetching stock data. Try again.');
       console.error(err);
     }
   };
@@ -70,7 +70,7 @@ const OptionPricer = () => {
         setPlotImg(data.plot);
       }
     } catch (err) {
-      setError('Error calculating option price');
+      setError('Error calculating option price. Try again.');
       console.error(err);
     }
   };
